@@ -3,6 +3,8 @@ package cn.com.xuxiaowei;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -47,6 +49,15 @@ public class DbcpConfiguration {
 
             System.out.println(connection);
 
+            PreparedStatement preparedStatement = connection.prepareStatement("select 3 * 4 as a");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int a = resultSet.getInt("a");
+                System.out.println(a);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,6 +86,15 @@ public class DbcpConfiguration {
         try (Connection connection = dataSource.getConnection()) {
 
             System.out.println(connection);
+
+            PreparedStatement preparedStatement = connection.prepareStatement("select 3 * 4 as a from dual");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int a = resultSet.getInt("a");
+                System.out.println(a);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
